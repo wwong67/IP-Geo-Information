@@ -9,9 +9,9 @@ It requires 3 Geo IP data sources, include a City and Country for each, a total 
 	3) https://db-ip.com/db/lite.php (City and Country files)
 Please read and follow each of their rules for usage
 
-Why 3 data sources, since I am using the "free" versions, they are not complete.
-Using multiple sources helps to make the results to be more accurate, results are like
-	1) return the results when 2 of the 3 matches
+Why 3 data sources, since I am using the "free" versions, they are not complete. Maybe add more in the future.
+Using multiple sources helps to make the results to be more accurate, results are in the following order
+	1) return the results when at least 2 of the DB matches at a country level.
 	2) If not of the results matches, return the first of the 3 that has data
 
 The primary program "ipgeoinfo.pl"
@@ -28,10 +28,12 @@ Next are the data files
 		/usr/local/OPGEOInfo/IP2GEO-City/IP2LOCATION-LITE-DB3.CSV
 		/usr/local/OPGEOInfo/IP2GEO-Country/IP2LOCATION-LITE-DB1.CSV
 	DB-IP files
-		/usr/local/IPGEOInfo/DBIP-City/dbip-city-lite.csv (this can be a link to something like "dbip-city-lite-2020-05.csv")
-		/usr/local/IPGEOInfo/DBIP-Country/dbip-country-lite.csv (this can be a link to something like "dbip-country-lite-2020-05.csv")
+		/usr/local/IPGEOInfo/DBIP-City/dbip-city-lite.csv
+			(this can be a link to something like "dbip-city-lite-2020-05.csv")
+		/usr/local/IPGEOInfo/DBIP-Country/dbip-country-lite.csv
+			(this can be a link to something like "dbip-country-lite-2020-05.csv")
 		
-	The final directory should look something like
+	The final directory structure should look something like
 		/usr/local/OPGEOInfo/
 			bin/ipgeoinfo.pl
 			GeoLite2-City/
@@ -59,5 +61,5 @@ To get data at a city level
 		
 Integration with geofilter and TCP Wrapper (there are many examples of this code on the internet, an example is available here)
 Usually, it looks for a two letter code for filter.
-Note, the one difference is that this program will return "RFC" for RFC1819 internal IP addresses
+Note, the one difference is that this program will return "RFC" for RFC1819 internal IP addresses.
 
