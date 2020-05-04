@@ -57,6 +57,7 @@ To get data at a city level
 		ipgeoinfo.pl -city 8.8.8.8
 		IP Geo Info - City (8.8.8.8): US, United States of America/California/Mountain View
 		
-Integration with geofilter (there are many examples of this code on the internet)
+Integration with geofilter and TCP Wrapper (there are many examples of this code on the internet, an example is available here)
 Usually, it looks for a two letter code for filter.
 Note, the one difference is that this program will return "RFC" for RFC1819 internal IP addresses
+
