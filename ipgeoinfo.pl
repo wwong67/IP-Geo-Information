@@ -13,7 +13,7 @@ use Socket;
 
 # Set the type of data to display, City/Country
 my $type = "Country";
-if ( $ARGV[0] eq "-city" ) { $type = shift @ARGV; $type = "City"; }
+if ( @ARGV and $ARGV[0] eq "-city" ) { $type = shift @ARGV; $type = "City"; }
 
 my $time = time ();
 my $basedir = "/usr/local/IPGEOInfo";
