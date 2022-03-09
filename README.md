@@ -16,8 +16,8 @@ Using multiple sources helps to make the results to be more accurate, results ar
 
 The primary program "ipgeoinfo.pl"
 
-To use, create the directory "/usr/local/OPGEOInfo"
-Place the file "ipgeoinfo.pl" into "usr/local/OPGEOInfo/bin"
+To use, create the directory "/usr/local/IPGEOInfo"
+Place the file "ipgeoinfo.pl" into "usr/local/IPGEOInfo/bin"
 Next are the data files
 	GeoLite2 files
 		/usr/local/OPGEOInfo/GeoLite2-City
