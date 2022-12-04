@@ -33,6 +33,7 @@ sub isRFCInternalIP
 
 	my @check = split ( /\./, $ip );
 
+	if ( $check[0] eq "127" ) { return ( 1 ); }
 	if ( $check[0] eq "10" ) { return ( 1 ); }
 	if ( $check[0] eq "172" and $check[1] eq "16" ) { return ( 1 ); }
 	if ( $check[0] eq "192" and $check[1] eq "168" ) { return ( 1 ); }
@@ -342,23 +343,23 @@ sub searchDBIP
 
 	my $inet = unpack("N",inet_aton($ip));
 	my $dbfile = "${basedir}/DBIP-${type}/dbip-country-lite.csv";
-	my $command = "grep '^$octet[0]\.' $dbfile";
+	my $command = "grep '^$octet[0]\\.' $dbfile";
 
 	if ( $type eq "City" )
 	   {
 		$dbfile = "${basedir}/DBIP-${type}/dbip-city-lite.csv";
-		$command = "grep '^$octet[0]\.$octet[1]\.' $dbfile";
+		$command = "grep '^$octet[0]\\.$octet[1]\\.' $dbfile";
 	   }
 
 	for $line ( `$command` )
 	   {
 		chomp ( $line );
 		@temp = split ( ',', $line );
-		$start = unpack("N",inet_aton($temp[0]));
-		if ( $start <= $inet )
+		if ( isIPv4 ( $temp[0] ) ) { $start = unpack ( "N",inet_aton($temp[0]) ) };
+		if ( $start and $start <= $inet )
 		   {
-			$end = unpack("N",inet_aton($temp[1]));
-			if ( $inet <= $end  )
+			if ( isIPv4 ( $temp[1] ) ) { $end = unpack("N",inet_aton($temp[1] ) ) };
+			if ( $end and $inet <= $end  )
 			   {
 				if ( $type eq "City" )
 				   {
@@ -372,6 +373,11 @@ sub searchDBIP
 	return;
 }
 
+sub is_integer
+{
+   defined $_[0] && $_[0] =~ /^[+-]?\d+$/;
+}
+
 sub isIPv4
 {
 	my $ip = shift @_;
@@ -380,7 +386,17 @@ sub isIPv4
 
 	if ( $size != 4 ) { return () };
 
-	if ( $octet[0] <= 255 and $octet[1] <= 255 and $octet[2] <= 255 and $octet[3] <= 255 ) { return ( 1 ); }
+	if (
+		( is_integer ( $octet[0] ) and is_integer ( $octet[1] ) and is_integer ( $octet[2] ) and is_integer ( $octet[3] ) )
+		and
+		( $octet[0] <= 255 and $octet[1] <= 255 and $octet[2] <= 255 and $octet[3] <= 255 )
+	   )
+	   {
+		return ( 1 );
+	   }
+
+	print "$ip - $size\n";
+	return ( 0 );
 }
 
 sub getGeoInfoCompare
